@@ -7,4 +7,31 @@ describe(Station) do
       expect(Station.all()).to(eq([]))
     end
   end
+
+  describe("#station_name") do
+    it("returns the station name") do
+      test_station = Station.new({:station_name => "Kitty Junction"})
+      expect(test_station.station_name()).to(eq("Kitty Junction"))
+    end
+  end
+
+  describe("#save") do
+    it("saves a station name") do
+      test_station = Station.new({:station_name => "Kitty Junction"})
+      test_station.save()
+      expect(Station.all()).to(eq([test_station]))
+    end
+  end
+
+  describe("#==") do
+    it("is the same station if it has the same station name") do
+      test_station1 = Station.new({:station_name => "Kitty Junction"})
+      test_station1.save()
+      test_station2 = Station.new({:station_name => "Kitty Junction"})
+      test_station2.save()
+      expect(test_station1).to(eq(test_station2))
+    end
+  end
+
+
 end
