@@ -4,8 +4,7 @@ describe(Station) do
 
   describe(".all") do
     it("starts out empty, will contain all stations") do
-      test_station = Station.new({:station_name => "Crabby Complex"})
-      expect(test_station.all()).to(ex([]))
+      expect(Station.all()).to(eq([]))
     end
   end
 end
