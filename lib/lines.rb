@@ -19,7 +19,7 @@ class Line
 
   define_method(:save) do
     result = DB.exec("INSERT INTO lines (line_name) VALUES ('#{@line_name}') RETURNING id;")
-    @id = result.first().fetch("id").to_i()
+    id = result.first().fetch("id").to_i()
   end
 
   define_method(:==) do |another_line|

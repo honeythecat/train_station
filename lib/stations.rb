@@ -1,10 +1,10 @@
 class Station
 
-  attr_reader(:station_name, :line_id)
+  attr_reader(:station_name, :id)
 
   define_method(:initialize) do |attributes|
     @station_name = attributes.fetch(:station_name)
-    @line_id = attributes.fetch(:line_id)
+    @id = attributes.fetch(:id)
   end
 
   define_singleton_method(:all) do
@@ -12,18 +12,18 @@ class Station
     stations = []
     returned_stations.each() do |station|
       station_name = station.fetch("station_name")
-      line_id = station.fetch("line_id").to_i()
-      stations.push(Station.new({:station_name => station_name, :line_id => line_id}))
+      id = station.fetch("id").to_i()
+      stations.push(Station.new({:station_name => station_name, :id => id}))
     end
     stations
   end
 
   define_method(:save) do
-    DB.exec("INSERT INTO stations (station_name) VALUES ('#{@station_name}');")
-    @line_id = result.first().fetch("line_id").to_i()
+    DB.exec("INSERT INTO stations (station_name) VALUES ('#{@station_name}') RETURNING id;")
+    id = result.first().fetch("id").to_i()
   end
 
   define_method(:==) do |first_station|
-    self.station_name().==(first_station.station_name.()).&(self.line_id().==(first_station.line_id()))
+    self.station_name().==(first_station.station_name.()).&(self.id().==(first_station.id()))
   end
 end
